@@ -8,8 +8,7 @@ addons:
       - google-chrome-stable
 language: node_js
 node_js:
-  - "express"
-  - "4.14"
+  - "0.12"
 env:
     - EMBER_VERSION=default
     - EMBER_VERSION=release
