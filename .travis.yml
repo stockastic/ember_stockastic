@@ -9,8 +9,6 @@ addons:
 language: node_js
 node_js:
   - "0.12"
-  #- "express"
-  #- "4.14"
 env:
     - EMBER_VERSION=default
     - EMBER_VERSION=release
