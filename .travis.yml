@@ -8,8 +8,9 @@ addons:
       - google-chrome-stable
 language: node_js
 node_js:
-  - "express"
-  - "4.14"
+  - "0.12"
+  #- "express"
+  #- "4.14"
 env:
     - EMBER_VERSION=default
     - EMBER_VERSION=release
@@ -37,6 +38,6 @@ install:
     - export PATH=$PWD/travis-phantomjs:$PATH
     - npm install -g bower
     - npm install
-    - bower install
+    #- bower install
 script:
     - ember test --server
