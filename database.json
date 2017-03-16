@@ -1,5 +1,5 @@
 {
-  "development": {
+  "local-dev": {
     "username": "postgres",
     "password": "",
     "database": "stockastic_development",

@@ -1,29 +1,47 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+let express = require('express');
+let path = require('path');
+let fs = require('fs');
+let expiry = require('static-expiry');
+let hbs = require('express-hbs');
+let favicon = require('serve-favicon');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
 
-var app = express();
+let app = express();
+let server = require('http').Server(app);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+let staticDir = path.join(__dirname, '/stockastic_client/public');
+let viewsDir = __dirname + '/server/views';
+let exec = require('child_process').exec;
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'local-dev';
+app.set('env', process.env.NODE_ENV);
+
+let config = require('./config.json');
+let env = app.get('env') || 'local-dev';
+let devEnv = (env === 'local-dev');
+let svgBodyParser = require('./server/utils/middleware/svg-body-parser');
+
+app.set('port', config[env].port);
+app.engine('hbs', hbs.express3({partialsDir: viewsDir}));
+
+app.set('view engine', 'hbs');
+app.set('views', viewsDir);
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb'}));
+app.use(svgBodyParser);
 
-app.use('/', index);
-app.use('/users', users);
+process.setMaxListeners(20);
+
+app.use(expiry(app, {dir: staticDir, debug: devEnv}));
+app.use(express.static(staticDir));
+hbs.registerHelper('furl', function(url){ return app.locals.furl(url); });
+require('./server/routes/routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,4 +61,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+process.on('uncaughtException', function(err) {
+    logger.error('Stockastic:uncaughtException:' + err.stack);
+    throw err;
+});
+
+exec('mkdir tmp', function() {
+    require('./server/utils/services/clean-up-service')(app).startService();
+    server.listen(app.get('port'), function(){
+        console.log('Add-on server running at http://' + os.hostname() + ':' + app.get('port'));
+    });
+});
