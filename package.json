@@ -21,6 +21,11 @@
   },
   "devDependencies": {
     "express-hbs": "^1.0.4",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-uglify": "^2.2.0",
+    "load-grunt-tasks": "^3.5.2",
     "static-expiry": "0.0.11"
   }
 }
