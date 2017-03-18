@@ -20,5 +20,7 @@ module.exports = grunt => {
 
 	});
 
-	grunt.registerTask('default', ['uglify']);
+	grunt.registerTask('default', ['uglify'], function() {
+		grunt.log.write("Starting uglification ...").ok();
+	});
 }
