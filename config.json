@@ -1,30 +1,3 @@
 {
-  "local-dev": {
-        "port": 3000,
-        "logging":"debug",
-        "store": {
-            "dialect": "postgres",
-            "username": "postgres",
-            "password": "",
-            "url": "postgres://localhost/gcc",
-            "host": "localhost",
-            "port": 5432,
-            "database": "stockastic_development"
-        },
-        "s3": {
-            "region": "us-east-1",
-            "imagebucket": "gliffy-connect-images-dev",
-            "gonbucket": "gliffy-connect-diagrams-dev"
-        },
-        "ds2Url": "http://localhost:8000",
-        "ds2Path": "/ds2/api/v1",
-        "transformHost":"http://localhost:8888",
-        "transformPath":"/dts/api/v1/diagrams",
-        "transformSvgPath": "/dts/api/v1/svg",
-        "connectHost":null,
-        "editorHost":"s3-us-west-1.amazonaws.com/gliffy-editor",
-        "shapeHost":"s3-us-west-1.amazonaws.com/gliffy-shape",
-        "templateHost":"s3.amazonaws.com/gliffy-templates"
-    }
-
+  
 }
