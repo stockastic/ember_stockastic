@@ -4,8 +4,10 @@
   "description": "web application to predict your portfolio growth",
   "main": "app.js",
   "scripts": {
-    "build": "babel src -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js --exec babel-node ",
+    "build": "babel src -d dist ",
+    "serve": "node dist/app.js",
+    "test": "mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,8 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.3.3",
-    "babel-preset-latest": "^6.24.1"
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "mocha": "^3.2.0"
   }
 }
