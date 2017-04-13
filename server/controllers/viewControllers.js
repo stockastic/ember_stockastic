@@ -8,6 +8,7 @@ module.exports = function(app) {
     return {
     	renderIndex: wrap(function*(req, resp, next) {
     		resp.render('layout.hbs');
+    		next();
     	});
     }
 }
