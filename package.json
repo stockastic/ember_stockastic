@@ -4,7 +4,7 @@
   "description": "web application to predict your portfolio growth",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js --exec babel-node ",
+    "start": "pm2 start app.js --exec babel-node ",
     "build": "babel src -d dist ",
     "serve": "node dist/app.js",
     "test": "mocha --compilers js:babel-register"
